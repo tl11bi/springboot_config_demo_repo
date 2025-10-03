@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: sit
   jpa:
     hibernate:
       ddl-auto: validate
