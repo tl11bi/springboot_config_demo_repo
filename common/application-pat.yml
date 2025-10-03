@@ -1,6 +1,53 @@
 spring:
   profiles:
     active: pat
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        
 logging:
   level:
     root: WARN
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    com.example: INFO # app-specific packages
+  pattern:
+    console: "%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n"
+    
+app:
+  cors:
+    allowed-origins: "https://pat-frontend.example.com"
+  security:
+    jwt:
+      expiration: 14400 # 4 hours for PAT
+  cache:
+    ttl: 600 # 10 minutes for PAT
+  mock:
+    enabled: false
+  integration:
+    timeout: 60000 # 60 seconds
+    retry:
+      maxAttempts: 5
+      delay: 2000
+  monitoring:
+    enabled: true
+    alerting:
+      enabled: true
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never
+    info:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
