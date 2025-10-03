@@ -1,0 +1,11 @@
+# Base configuration loaded for all applications and environments
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+logging:
+  level:
+    root: INFO
+app:
+  companyName: "ExampleCorp"

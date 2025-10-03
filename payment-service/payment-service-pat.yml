@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: payment-service
+  datasource:
+    url: jdbc:postgresql://pat-db.example.local:5432/payments
+    username: pay_user
+    password: ${PAY_DB_PASSWORD:changeme}
+app:
+  featureFlags:
+    newCheckout: false
+  kafka:
+    bootstrapServers: pat-kafka.example.local:9092
+    topicPayments: payments.pat

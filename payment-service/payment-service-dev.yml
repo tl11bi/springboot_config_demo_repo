@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: payment-service
+  datasource:
+    url: jdbc:postgresql://dev-db.example.local:5432/payments
+    username: pay_user
+    password: ${PAY_DB_PASSWORD:changeme}  # use vault/keystore in prod
+app:
+  featureFlags:
+    newCheckout: true
+  kafka:
+    bootstrapServers: dev-kafka.example.local:9092
+    topicPayments: payments.dev

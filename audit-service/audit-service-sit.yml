@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: audit-service
+audit:
+  writer: mongodb
+  mongodb:
+    uri: mongodb://sit-mongo.example.local:27017/audit
+  retentionDays: 30
