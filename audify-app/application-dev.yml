@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:audify_dev;MODE=MSSQLServer;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # PingFederate JWKS endpoint for JWT validation
+          jwk-set-uri: ${PINGFED_JWKS_URI:https://pingfed.example.com/pf/JWKS}
+          # Issuer URI for JWT validation
+          issuer-uri: ${PINGFED_ISSUER_URI:https://pingfed.example.com}
+
+logging:
+  level:
+    root: INFO
+    com.audify: DEBUG
+
+# PingFederate OAuth2/OIDC configuration
+audify:
+  jwt:
+    # For dev/testing with PingFed
+    # In production, tokens are validated via jwk-set-uri above
+    issuer: ${PINGFED_ISSUER_URI:https://pingfed.example.com}
+    audience: ${PINGFED_AUDIENCE:audify-api}
+    user-claim: ${PINGFED_USER_CLAIM:sub} # Claim containing userId (could be 'sub', 'userId', 'email', etc.)
+  oauth2:
+    client:
+      client-id: ${PINGFED_CLIENT_ID:audify-client-id}
+      client-secret: ${PINGFED_CLIENT_SECRET:your-client-secret}
+      authorization-uri: ${PINGFED_AUTH_URI:https://pingfed.example.com/as/authorization.oauth2}
+      token-uri: ${PINGFED_TOKEN_URI:https://pingfed.example.com/as/token.oauth2}
+      user-info-uri: ${PINGFED_USERINFO_URI:https://pingfed.example.com/idp/userinfo.openid}
+      scope: openid,profile,email
